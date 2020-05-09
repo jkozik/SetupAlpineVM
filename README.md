@@ -46,12 +46,28 @@ The Alpine OS will install and reboot.  In VB make sure to set the boot order so
 # vi /etc/apk/repositories # uncomment all of the repositories
 # apk update
 # adduser jkozik
+# apk add sudo
+# visudo    # 
 ```
-At this point, alpine is setup just enough that you can login over ssh to user jkozik
+At this point, alpine is setup just enough that you can login over ssh to user jkozik. Login with ssh to jkozik@192.168.100.176 using password, and setup rsa key.
+```
+$ mkdir -p ~/.ssh && touch ~/.ssh/authorized_keys
+$ chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys
+$ vi ~/.ssh/authorized_keys    # cut and paste a contents of a id_rsa.pub public key file into here
+```
+At this point, you can ssh into the alpine linux instance with ssh key, no password.  To me this is now ready to be customized.  I want this VM to run docker, so I log back in and continue setting up the image.
+```
+$ sudo apk add docker
+$ sudo rc-update add docker boot
+$ sudo service docker start
+$ sudo service docker status    # verify docker is running
+$ sudo docker run hello-world   # this should work
 
-# Setup ssh access.  The terminal window in VB is clunky for me
-$ apk add openssh
-$ rc-update add sshd
-$ rc-status
-$ /etc/init.d/sshd start
-$ adduser jkozik
+# I need to setup group permissions so I don't need sudo for each docker command per
+# http://web.ist.utl.pt/joao.leao.guerreiro/post/alpinedocker/
+
+$ sudo visudo   #uncomment %wheel ALL=(ALL) ALL
+$ sudo vi /etc/group  # wheel:x:10:root,jkozik,  and docker:x:102:jkozik
+$ docker run hello-world  # this should now work I think you need to logout and log back in to verify.
+```
+
