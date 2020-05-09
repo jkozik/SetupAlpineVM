@@ -70,4 +70,12 @@ $ sudo visudo   #uncomment %wheel ALL=(ALL) ALL
 $ sudo vi /etc/group  # wheel:x:10:root,jkozik,  and docker:x:102:jkozik
 $ docker run hello-world  # this should now work I think you need to logout and log back in to verify.
 ```
-
+At this point, let's pull in a known working docker repository and test run it.
+```
+$ sudo apk add git
+$ git clone https://github.com/jkozik/InstallNw.com
+$ cd InstallNw.com
+$ docker build -t jkozik/nw.com .
+$ docker run -dit --name nw.com-app -p 8082:80  jkozik/nw.com
+$ docker exec -it nw.com-app /bin/bash
+```
