@@ -74,9 +74,16 @@ At this point, let's pull in a known working docker repository and test run it.
 ```
 $ sudo apk add git
 $ git clone https://github.com/jkozik/InstallNw.com
-$ sudo apk add virtualbox-guest-additions virtualbox-guest-modules-virt
 $ cd InstallNw.com
 $ docker build -t jkozik/nw.com .
 $ docker run -dit --name nw.com-app -p 8082:80  jkozik/nw.com
 $ docker exec -it nw.com-app /bin/bash
 ```
+
+Side note:  VB lets you share files from the host OS.  Here's the raw steps I followed:
+# apk add virtualbox-guest-additions virtualbox-guest-modules-virt
+# mkdir /mount
+# mkdir /mount/weather-uploads
+# mkdir /mount/wjr-uploads
+# mount -t vboxsf weather-uploads /mount/weather-uploads
+# mount -t vboxsf wjr-uploads     /mount/wjr-uploads
