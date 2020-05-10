@@ -74,6 +74,7 @@ At this point, let's pull in a known working docker repository and test run it.
 ```
 $ sudo apk add git
 $ git clone https://github.com/jkozik/InstallNw.com
+$ sudo apk add virtualbox-guest-additions virtualbox-guest-modules-virt
 $ cd InstallNw.com
 $ docker build -t jkozik/nw.com .
 $ docker run -dit --name nw.com-app -p 8082:80  jkozik/nw.com
