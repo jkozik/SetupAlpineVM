@@ -57,7 +57,7 @@ $ vi ~/.ssh/authorized_keys    # cut and paste a contents of a id_rsa.pub public
 ```
 At this point, you can ssh into the alpine linux instance with ssh key, no password.  To me this is now ready to be customized.  I want this VM to run docker, so I log back in and continue setting up the image.
 ```
-$ sudo apk add docker
+$ sudo apk add docker docker-compose
 $ sudo rc-update add docker boot
 $ sudo service docker start
 $ sudo service docker status    # verify docker is running
@@ -83,7 +83,10 @@ $ docker exec -it nw.com-app /bin/bash
 Side note:  VB lets you share files from the host OS.  Here's the raw steps I followed:
 # apk add virtualbox-guest-additions virtualbox-guest-modules-virt
 # mkdir /mount
-# mkdir /mount/weather-uploads
-# mkdir /mount/wjr-uploads
-# mount -t vboxsf weather-uploads /mount/weather-uploads
-# mount -t vboxsf wjr-uploads     /mount/wjr-uploads
+# mkdir /mount/weather
+# mkdir /mount/wjr
+# mount -t vboxsf weather /mount/weather
+# mount -t vboxsf wjr     /mount/wjr
+# vi /etc/fstab    #add "weather /mount/weather  vboxsf  defaults 0 0"
+                   #add "wjr     /mount/wjr      vboxsf  defaults 0 0"
+# vi /etc/modules  #add "vboxfs"
