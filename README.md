@@ -81,6 +81,7 @@ $ docker exec -it nw.com-app /bin/bash
 ```
 
 Side note:  VB lets you share files from the host OS.  Here's the raw steps I followed:
+```
 # apk add virtualbox-guest-additions virtualbox-guest-modules-virt
 # mkdir /mount
 # mkdir /mount/weather
@@ -90,3 +91,4 @@ Side note:  VB lets you share files from the host OS.  Here's the raw steps I fo
 # vi /etc/fstab    #add "weather /mount/weather  vboxsf  defaults 0 0"
                    #add "wjr     /mount/wjr      vboxsf  defaults 0 0"
 # vi /etc/modules  #add "vboxfs"
+```
