@@ -92,3 +92,11 @@ Side note:  VB lets you share files from the host OS.  Here's the raw steps I fo
                    #add "wjr     /mount/wjr      vboxsf  defaults 0 0"
 # vi /etc/modules  #add "vboxfs"
 ```
+So, if I rerun the above image with the following commands
+```
+$ docker stop nw.com-app; docker rm nw.com-app
+$ docker run -dit --name wjr-data -v /mount/wjr:/var/www/html/mount php:7.2-apache
+$ docker run -dit --name nw.com-app -p 8082:80 --volumes-from wjr-data jkozik/nw.com
+$ docker exec -it nw.com-app /bin/bash
+```
+At the bash prompt, I should be able to see these host files nicely mounted at /var/www/html/mount and http:ipaddr:8082/wxindex.php should work.
